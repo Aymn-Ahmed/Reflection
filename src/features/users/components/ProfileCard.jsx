@@ -7,7 +7,7 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import { useAuth } from "../../../context/useAuthHook"; // لاستخدامه في زر "تعديل الملف الشخصي"
+import { useAuth } from "../../../context/AuthContext"; // لاستخدامه في زر "تعديل الملف الشخصي"
 import { useNavigate } from "react-router-dom"; // استيراد useNavigate
 
 // المكون يستقبل كائن المستخدم كـ prop

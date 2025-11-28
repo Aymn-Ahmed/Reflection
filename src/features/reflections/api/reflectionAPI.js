@@ -4,16 +4,16 @@ const initialReflections = [
   { 
     id: 'reflection-1', 
     content: 'هذا هو التأمل الأول. يا له من يوم جميل! آمل أن يكون الجميع بخير.', 
-    author: { uid: 'user1', name: 'أيمن أحمد', avatar: 'https://i.pravatar.cc/150?u=user1' },
+    author: { id: 'user1', name: 'أيمن أحمد', avatar: 'https://i.pravatar.cc/150?u=user1' },
     createdAt: new Date(Date.now( ) - 1000 * 60 * 60 * 2).toISOString(), // قبل ساعتين
     likes: ['user2', 'user3'],
-    comments: [{id: 'c1', text: 'أتفق معك!', author: {uid: 'user2', name: 'فاطمة علي'}}],
+    comments: [{id: 'c1', text: 'أتفق معك!', author: {id: 'user2', name: 'فاطمة علي'}}],
     repostsCount: 1,
   },
   { 
     id: 'reflection-2', 
     content: 'البرمجة هي فن تحويل القهوة إلى كود. #React #JavaScript', 
-    author: { uid: 'user2', name: 'فاطمة علي', avatar: 'https://i.pravatar.cc/150?u=user2' },
+    author: { id: 'user2', name: 'فاطمة علي', avatar: 'https://i.pravatar.cc/150?u=user2' },
     createdAt: new Date(Date.now( ) - 1000 * 60 * 60 * 24).toISOString(), // قبل يوم
     likes: ['user1'],
     comments: [],
@@ -22,12 +22,12 @@ const initialReflections = [
   {
     id: 'repost-1',
     type: 'repost',
-    author: { uid: 'user3', name: 'خالد سعيد', avatar: 'https://i.pravatar.cc/150?u=user3' },
+    author: { id: 'user3', name: 'خالد سعيد', avatar: 'https://i.pravatar.cc/150?u=user3' },
     createdAt: new Date(Date.now( ) - 1000 * 60 * 30).toISOString(), // قبل 30 دقيقة
     original: { // التأمل الأصلي الذي تمت إعادة نشره
       id: 'reflection-2', 
       content: 'البرمجة هي فن تحويل القهوة إلى كود. #React #JavaScript', 
-      author: { uid: 'user2', name: 'فاطمة علي', avatar: 'https://i.pravatar.cc/150?u=user2' },
+      author: { id: 'user2', name: 'فاطمة علي', avatar: 'https://i.pravatar.cc/150?u=user2' },
       createdAt: new Date(Date.now( ) - 1000 * 60 * 60 * 24).toISOString(),
       likes: ['user1'],
       comments: [],
@@ -84,13 +84,13 @@ export const createReflection = async (reflectionData, currentUser) => {
     await simulateDelay();
     const db = getDb();
     const newReflection = {
-        id: `reflection-${Date.now()}`,
-        ...reflectionData,
-        author: { uid: currentUser.uid, name: currentUser.displayName, avatar: currentUser.photoURL },
-        createdAt: new Date().toISOString(),
-        likes: [],
-        comments: [],
-        repostsCount: 0,
+      id: `reflection-${Date.now()}`,
+      ...reflectionData,
+      author: { id: currentUser.id, name: currentUser.name, avatar: currentUser.avatar },
+      createdAt: new Date().toISOString(),
+      likes: [],
+      comments: [],
+      repostsCount: 0,
     };
     db.unshift(newReflection);
     saveDb(db);
@@ -175,7 +175,7 @@ export const fetchUserReflections = async (userId) => {
   // 4. فلترة المنشورات للعثور على تلك التي تخص المستخدم المطلوب
   const userReflections = allReflections.filter(reflection => {
     // تحقق من أن المنشور يحتوي على كائن `user` وأن الـ `id` الخاص به يطابق الـ `userId` المطلوب
-    return reflection.user && reflection.user.id === userId;
+    return (reflection.user && reflection.user.id === userId) || (reflection.author && reflection.author.id === userId);
   });
 
 

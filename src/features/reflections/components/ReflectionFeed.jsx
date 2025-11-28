@@ -7,39 +7,58 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 
 // تعريف أنواع الإجراءات لتجنب الأخطاء الإملائية (تطبيقاً لفكرتك)
 const ACTION_TYPES = {
-  SET_DATA: 'SET_DATA',
-  ADD: 'ADD',
-  UPDATE: 'UPDATE',
-  DELETE: 'DELETE',
+  SET_DATA: "SET_DATA",
+  ADD: "ADD",
+  UPDATE: "UPDATE",
+  DELETE: "DELETE",
 };
-
 function feedReducer(state, action) {
   switch (action.type) {
-    case ACTION_TYPES.SET_DATA:
+    case "SET_DATA":
       return action.payload;
-    case ACTION_TYPES.ADD:
+    case "ADD":
       return [action.payload, ...state];
-    case ACTION_TYPES.UPDATE:
+
+    // ✅✅✅ هذا هو المنطق الجديد للإعجاب ✅✅✅
+    case "TOGGLE_LIKE": {
+      const { reflectionId, userId } = action.payload;
       return state.map((item) => {
-        if (item.type === "repost" && item.original.id === action.payload.id) {
-          return { ...item, original: action.payload };
+        if (item.id === reflectionId) {
+          const likes = item.likes || [];
+          const isLiked = likes.includes(userId);
+          const updatedLikes = isLiked
+            ? likes.filter((id) => id !== userId) // إلغاء الإعجاب
+            : [...likes, userId]; // إضافة إعجاب
+          return { ...item, likes: updatedLikes };
         }
-        if (item.id === action.payload.id) {
-          return action.payload;
+        // تحديث الإعجاب داخل التأمل الأصلي في حالة إعادة النشر
+        if (item.type === "repost" && item.original.id === reflectionId) {
+          const original = item.original;
+          const likes = original.likes || [];
+          const isLiked = likes.includes(userId);
+          const updatedLikes = isLiked
+            ? likes.filter((id) => id !== userId)
+            : [...likes, userId];
+          return { ...item, original: { ...original, likes: updatedLikes } };
         }
         return item;
       });
-    case ACTION_TYPES.DELETE:
+    }
+
+    case "DELETE":
       return state.filter((item) => {
         if (item.type === "repost") {
           return item.original.id !== action.payload.id;
         }
         return item.id !== action.payload.id;
       });
+
     default:
       throw new Error(`Unknown action type: ${action.type}`);
   }
 }
+
+// ... (بقية المكون يبقى كما هو)
 
 const ReflectionFeed = () => {
   const [feedItems, dispatch] = useReducer(feedReducer, []);

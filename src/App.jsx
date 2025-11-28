@@ -29,11 +29,8 @@ function App() {
         {/* --- القسم الأول: المسارات العامة (متاحة للجميع) --- */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        
         {/* هل صفحة الملف الشخصي العام يجب أن تكون عامة؟ إذا نعم، اتركها هنا */}
         <Route path="/users/:userId" element={<PublicProfile />} />
-
-
         {/* --- القسم الثاني: المسارات المحمية (تتطلب تسجيل الدخول) --- */}
           <Route element={<ProtectedRoute />}>
           {/* كل المسارات داخل هذا القسم ستكون محمية تلقائياً */}
@@ -45,10 +42,10 @@ function App() {
 
           <Route path="/profile/edit" element={<EditProfilePage />} />
 
-  <Route path="/reflections/:reflectionId" element={<ReflectionDetails />} />
+          <Route path="/reflections/:reflectionId" element={<ReflectionDetails />} />
 
         </Route>
-          {/* يمكنك إضافة أي مسارات أخرى تريد حمايتها هنا */}
+        
 
       </Routes>
     </>

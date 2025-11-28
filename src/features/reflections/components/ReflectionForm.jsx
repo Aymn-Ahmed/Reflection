@@ -9,7 +9,7 @@ import {
   CardHeader,
   Typography,
 } from "@mui/material";
-import { useAuth } from "../../../context/useAuthHook";
+import { useAuth } from "../../../context/AuthContext";
 
 const ReflectionForm = ({ onSubmit }) => {
   const [type, setType] = useState("ayah");

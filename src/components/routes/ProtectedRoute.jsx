@@ -14,7 +14,7 @@ const ProtectedRoute = () => {
   if (!currentUser) {
     return <Navigate to="/login" replace />;
   }
-
+  
   // إذا انتهى التحميل وكان المستخدم موجوداً، اسمح له بالمرور.
   return <Outlet />;
 };

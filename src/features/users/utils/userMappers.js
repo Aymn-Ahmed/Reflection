@@ -2,19 +2,19 @@
 export const formatUser = (apiUser) => {
   if (!apiUser) return null;
   return {
-    id: apiUser.uid,
-    name: apiUser.displayName,
+    id: apiUser.id,
+    name: apiUser.name,
     email: apiUser.email,
-    avatar: apiUser.photoURL,
+    avatar: apiUser.avatar,
     // يمكنك إضافة قيم افتراضية هنا أيضاً
-    // avatar: apiUser.photoURL || 'default-avatar.png', 
+    // avatar: apiUser.avatar || 'default-avatar.png',
   };
 };
 
 
 /**
  @param {object} appUserData - البيانات من نموذج التطبيق (e.g., { name, avatar, email })
- * @returns {object} - البيانات بتنسيق الـ API (e.g., { displayName, photoURL, email })
+ * @returns {object} - البيانات بتنسيق الـ API (e.g., { name, avatar, email })
  */
 export const formatUserForApi = (appUserData) => {
   // إذا كانت البيانات المدخلة فارغة، أرجع كائناً فارغاً لتجنب الأخطاء
@@ -25,10 +25,10 @@ export const formatUserForApi = (appUserData) => {
   // التحقق من وجود كل خاصية قبل إضافتها
   // هذا يمنع إرسال قيم `undefined` إلى الـ API
   if (appUserData.name !== undefined) {
-    apiData.displayName = appUserData.name;
+    apiData.name = appUserData.name;
   }
   if (appUserData.avatar !== undefined) {
-    apiData.photoURL = appUserData.avatar;
+    apiData.avatar = appUserData.avatar;
   }
   if (appUserData.email !== undefined) {
     apiData.email = appUserData.email;

@@ -21,8 +21,8 @@ const simulateDelay = (ms) => new Promise(res => setTimeout(res, ms));
 // --- دوال API الخاصة بعمليات المستخدمين ---
 
 /**
- * دالة لجلب بيانات مستخدم واحد باستخدام الـ uid.
- * @param {string} userId - الـ uid الخاص بالمستخدم.
+ * دالة لجلب بيانات مستخدم واحد باستخدام الـ id.
+ * @param {string} userId - الـ id الخاص بالمستخدم.
  * @returns {Promise<Object|null>} - Promise يرجع كائن المستخدم المحول أو null.
  */
 export const getUserById = async (userId) => {
@@ -34,7 +34,7 @@ export const getUserById = async (userId) => {
   }
 
   const users = getUsers();
-  const user = users.find(u => u.uid === userId);
+  const user = users.find(u => u.id === userId);
 
   if (!user) {
     console.warn(`User with ID ${userId} not found.`);
@@ -47,8 +47,8 @@ export const getUserById = async (userId) => {
 
 /**
  * دالة لتحديث بيانات مستخدم معين.
- * @param {string} userId - الـ uid الخاص بالمستخدم.
- * @param {object} updatedData - البيانات الجديدة (مثل { displayName: 'اسم جديد' }).
+ * @param {string} userId - الـ id الخاص بالمستخدم.
+ * @param {object} updatedData - البيانات الجديدة (مثل { name: 'اسم جديد' }).
  * @returns {Promise<Object>} - Promise يرجع كائن المستخدم المحدث والمحول.
  */
 export const updateUser = async (userId, updatedData) => {
@@ -59,7 +59,7 @@ export const updateUser = async (userId, updatedData) => {
   }
 
   const users = getUsers();
-  const userIndex = users.findIndex(u => u.uid === userId);
+  const userIndex = users.findIndex(u => u.id === userId);
 
   if (userIndex === -1) {
     throw new Error("المستخدم غير موجود.");

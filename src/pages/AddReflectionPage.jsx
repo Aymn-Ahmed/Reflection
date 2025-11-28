@@ -12,7 +12,7 @@ import {
   Avatar,
   IconButton,
 } from "@mui/material";
-import { useAuth } from "../context/useAuthHook";
+import { useAuth } from "../context/AuthContext";
 import { createReflection } from "../features/reflections/api/reflectionAPI";
 
 // استيراد أيقونات الوسائط
@@ -22,6 +22,7 @@ import PollIcon from "@mui/icons-material/Poll";
 import GifBoxIcon from "@mui/icons-material/GifBox";
 
 const AddReflectionPage = () => {
+  
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation(); // للحصول على النص المنقول من المكون المنبثق

@@ -8,12 +8,11 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-import { useAuth } from "../context/useAuthHook";
+import { useAuth } from "../context/AuthContext";
 // استيراد الدوال من ملف الـ API الخاص بك
 import { fetchUserReflections } from "../features/reflections/api/reflectionAPI";
-
-import ProfileCard from "../features/users/components/ProfileCard";
 import ReflectionList from "../components/reflections/ReflectionList";
+import ProfileCard from "../features/users/components/ProfileCard";
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -24,7 +23,7 @@ const Profile = () => {
   useEffect(() => {
     // تأكد من وجود المستخدم قبل محاولة جلب البيانات
     if (currentUser && currentUser.id) {
-      // أو currentUser.uid حسب هيكل بياناتك
+      // استخدام currentUser.id كمعرّف المستخدم
       const loadProfileData = async () => {
         try {
           setLoading(true);

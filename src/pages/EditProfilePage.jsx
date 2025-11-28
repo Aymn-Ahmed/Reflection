@@ -12,7 +12,7 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-import { useAuth } from "../context/useAuthHook";
+import { useAuth } from "../context/AuthContext";
 import { updateUser } from "../features/users/api/userAPI";
 import { formatUserForApi } from "../features/users/utils/userMappers";
 

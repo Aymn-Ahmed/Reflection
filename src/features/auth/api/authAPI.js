@@ -34,11 +34,11 @@ export const registerUser = (name, email, password) => {
       }
       
       const newUser = {
-        uid: `user-${Date.now()}`,
+        id: `user-${Date.now()}`,
         email: email,
         password: password, // ملاحظة: لا تفعل هذا في تطبيق حقيقي
-        displayName: name,
-        photoURL: `https://i.pravatar.cc/150?u=${email}`
+        name: name,
+        avatar: `https://i.pravatar.cc/150?u=${email}`
       };
       
       users.push(newUser );

@@ -8,7 +8,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import ReflectionCard from "../components/reflections/ReflectionCard";
-import { useAuth } from "../context/useAuthHook";
+import { useAuth } from "../context/AuthContext";
 import {
   fetchUserReflections,
   deleteReflection,
